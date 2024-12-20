@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Run checksum action
-        uses: thewh1teagle/checksum@main
+        uses: thewh1teagle/checksum@v1
         with:
           repo: "thewh1teagle/vibe" # Optional
           patterns: | # Optional
