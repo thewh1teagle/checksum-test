@@ -1,0 +1,89 @@
+name: Test Checksum Action
+
+on:
+  schedule:
+    - cron: '0 1 * * *'  # Runs at 1:00 AM UTC daily
+  workflow_dispatch:
+
+jobs:
+  test-release:
+    runs-on: macos-latest
+
+    steps:
+      - name: Run checksum action
+        uses: thewh1teagle/checksum@v1
+        with:
+          patterns: | # Optional
+            *.zip
+            *.tar.gz
+            *.txt
+            !b.txt
+          algorithm: sha256 # Optional
+        env:
+          # You must enable write permission in github.com/user/repo/settings/actions -> Workflow permissions -> Read and write permissions
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+
+  test-no-token:
+    runs-on: macos-latest
+    continue-on-error: true
+
+    steps:
+      - name: Run checksum action
+        uses: thewh1teagle/checksum@v1
+        with:
+          patterns: | # Optional
+            *.zip
+            *.tar.gz
+            *.txt
+            !b.txt
+          algorithm: sha256 # Optional
+
+  test-pre-release:
+    runs-on: macos-latest
+
+    steps:
+      - name: Run checksum action
+        uses: thewh1teagle/checksum@v1
+        with:
+          patterns: | # Optional
+            *.zip
+            *.tar.gz
+            *.txt
+            !b.txt
+          algorithm: sha256 # Optional
+          pre-release: true
+        env:
+          # You must enable write permission in github.com/user/repo/settings/actions -> Workflow permissions -> Read and write permissions
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+
+
+  test-specify-tag:
+    runs-on: macos-latest
+
+    steps:
+      - name: Run checksum action
+        uses: thewh1teagle/checksum@v1
+        with:
+          patterns: | # Optional
+            *.zip
+            *.tar.gz
+            *.txt
+            !b.txt
+          algorithm: sha256 # Optional
+          tag: specific
+        env:
+          # You must enable write permission in github.com/user/repo/settings/actions -> Workflow permissions -> Read and write permissions
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+
+
+  test-specify-repo:
+    runs-on: macos-latest
+
+    steps:
+      - name: Run checksum action
+        uses: thewh1teagle/checksum@v1
+        with:
+          repo: "thewh1teagle/vibe" # Optional
+          tag: v3.0.0
+          dry-run: true
+        
