@@ -1,0 +1,16 @@
+name: Test Checksum Action
+
+on:
+    workflow_dispatch: 
+
+jobs:
+  test:
+    runs-on: macos-latest
+
+    steps:
+      - name: Run checksum action
+        uses: thewh1teagle/checksum@main
+        with:
+          repo: "thewh1teagle/vibe"  
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
